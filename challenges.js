@@ -11,6 +11,9 @@ GAME RULES:
 
 let scores, roundScore, activePlayer, dice, gamePlaying, roll6NLose, targetScore;
 let diceDom = document.querySelector('.dice'); 
+let diceDom2 = document.querySelector('.two');
+
+
 
 function init() {
     scores = [0,0]
@@ -18,7 +21,9 @@ function init() {
     roundScore = 0;
 
     gamePlaying = true;
-    diceDom.style.display = 'none';
+    diceDom.style.display = 'none'; // CHANGE TO NONE
+    diceDom2.style.display = 'none';
+    
 
     document.getElementById('score-0').textContent = '0'
     document.getElementById('current-0').textContent = '0'
@@ -42,18 +47,22 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
    
     if (gamePlaying) {
     const dice = Math.floor(Math.random()*6) + 1;
+    const dice2 = Math.floor(Math.random()*6) + 1;
 
 
     diceDom.style.display = 'block';
+    diceDom2.style.display = 'block';
     diceDom.src = 'dice-' + dice + '.png';
-    if (dice === 6 && roll6NLose === 6) {
+    diceDom2.src = 'dice-' + dice2 + '.png';
+    if (dice === 6 && dice2 ===6 && roll6NLose === 6) {
         scores[activePlayer] = 0;
         document.querySelector('#score-' + activePlayer).textContent = '0';
         nextPlayer();
     }
-    else if (dice !== 1) {
+    else if (dice !== 1 && dice2 !== 1) {
          // add score
          roundScore += dice;
+         roundScore += dice2
          document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
          // next player
@@ -63,18 +72,18 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         
     // if you roll 6 twice in a row you lose
     roll6NLose = dice 
-
+    roll6NLose = dice2
    } 
 
 } )
 
 // ALERT POPUP
-/*
+
 document.querySelector('.target-score').addEventListener('click', function() {
     alert('The target score of the game is pre set to 100. You can choose'
         + ' to set the target score to whatever you\'d like in the "Change Target'
         + ' Score" area, otherwise the target score will remain at 100.')
-}) */
+}) 
 
 
 // HOLD BUTTON FUNCTION
@@ -108,6 +117,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
         document.getElementById('score-' + activePlayer).textContent = 'WINNER!';
         document.querySelector('.dice').style.display = 'none';
+        diceDom2.style.display = 'none';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
         gamePlaying = false;
@@ -148,6 +158,7 @@ function nextPlayer () {
             document.querySelector('.player-1-panel').classList.toggle('active');
     
             document.querySelector('.dice').style.display = 'none';
+            diceDom2.style.display = 'none';
 }
 
 
