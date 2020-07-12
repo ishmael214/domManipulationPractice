@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-let scores, roundScore, activePlayer, dice, gamePlaying, diceRollScore;
+let scores, roundScore, activePlayer, dice, gamePlaying, roll6NLose, targetScore;
 let diceDom = document.querySelector('.dice'); 
 
 function init() {
@@ -39,14 +39,19 @@ init();
 
 
 document.querySelector('.btn-roll').addEventListener('click', function () {
-   if (gamePlaying) {
+   
+    if (gamePlaying) {
     const dice = Math.floor(Math.random()*6) + 1;
 
 
     diceDom.style.display = 'block';
     diceDom.src = 'dice-' + dice + '.png';
- 
-    if (dice !== 1) {
+    if (dice === 6 && roll6NLose === 6) {
+        scores[activePlayer] = 0;
+        document.querySelector('#score-' + activePlayer).textContent = '0';
+        nextPlayer();
+    }
+    else if (dice !== 1) {
          // add score
          roundScore += dice;
          document.querySelector('#current-' + activePlayer).textContent = roundScore;
@@ -55,17 +60,31 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         nextPlayer();
     }
 
+        
+    // if you roll 6 twice in a row you lose
+    roll6NLose = dice 
+
    } 
 
 } )
+
+// ALERT POPUP
+/*
+document.querySelector('.target-score').addEventListener('click', function() {
+    alert('The target score of the game is pre set to 100. You can choose'
+        + ' to set the target score to whatever you\'d like in the "Change Target'
+        + ' Score" area, otherwise the target score will remain at 100.')
+}) */
 
 
 // HOLD BUTTON FUNCTION
 
 
 document.querySelector('.btn-hold').addEventListener('click', function () {
+    input = document.querySelector('.target-score').value 
+    
     if (gamePlaying) {
-
+    
 
     // add current score to global score
     scores[activePlayer] += roundScore;
@@ -75,14 +94,26 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     document.querySelector('#score-' + activePlayer).textContent = playerScore;
 
+    // add your own target score
+    if (input) {
+        targetScore = input
+        console.log('The target score is currently set to ' + targetScore);
+    } else {
+        targetScore = 100;
+        console.log('New target score has not been set so it is currently ' + targetScore);
+    }
+
     // check if player won the game
-    if (playerScore >= 5) {
+    if (playerScore >= targetScore) {
+
         document.getElementById('score-' + activePlayer).textContent = 'WINNER!';
         document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
         gamePlaying = false;
-    } else {
+    }
+    
+     else {
         nextPlayer();
     }
 
@@ -117,7 +148,6 @@ function nextPlayer () {
             document.querySelector('.player-1-panel').classList.toggle('active');
     
             document.querySelector('.dice').style.display = 'none';
-            console.log(scores);
 }
 
 
