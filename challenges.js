@@ -179,3 +179,28 @@ function nextPlayer () {
 // document.querySelector('#current-' + activeplayer).innerHTML = '<em>' + dice + '</em>'
 
 // let x = document.querySelector('#score-0').textContent;
+
+// real quick cool functions 
+
+function favMartialArt(martialArt) {
+    if (martialArt === 'Muay Thai') {
+        return function(name) {
+        console.log('Aye ' + name + ', ' + martialArt + ' is badass as hell s\/o apajai');
+        }
+    } else if (martialArt = 'Karate') {
+        return function(name) {
+        console.log('Yeah that ' + martialArt + ' is cool and all ' + name + ', but you still can\'t whoop me tho.');
+        }
+    } else { 
+        return function(name) {
+        console.log('Geez ' + name + ' you don\'t like fighting?');
+        }
+    }
+}
+
+let muayThai = favMartialArt('Muay Thai');
+
+let karate = favMartialArt('Karate');
+karate('KENDO');
+
+

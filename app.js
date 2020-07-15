@@ -124,16 +124,6 @@ function nextPlayer () {
 
 
 
-
-
-
-
-
-
-
-
-
-
 // document.querySelector('#current-' + activePlayer).textContent = dice;
 // document.querySelector('#current-' + activeplayer).innerHTML = '<em>' + dice + '</em>'
 
